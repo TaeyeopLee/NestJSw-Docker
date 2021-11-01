@@ -1,0 +1,71 @@
+version: '3.2'
+
+services:
+  nginx:
+    container_name: nginx-openapi
+    image: nginx:stable
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/nginx.conf
+      - nginx-log:/var/log/nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - openapi1
+      - openapi2
+    networks:
+      - openapi-net
+
+  openapi1:
+    container_name: node-openapi-1
+    build:
+      context: node/
+    restart: always
+    image: node-openapi
+    volumes:
+      - ./:/Users/user/Documents/Test/test-nest/
+      - openapi-log-1:/Users/user/Documents/Test/test-nest/logs
+    working_dir: /Users/user/Documents/Test/test-nest/dist/src
+    ports:
+      - "16000:16000"
+    command: node main.js
+    networks:
+      - openapi-net
+      
+  openapi2:
+    container_name: node-openapi-2
+    build:
+      context: node/
+    restart: always
+    image: node-openapi
+    volumes:
+      - ./:/Users/user/Documents/Test/test-nest/
+      - openapi-log-2:/Users/user/Documents/Test/test-nest/logs
+    working_dir: /Users/user/Documents/Test/test-nest/dist/src
+    ports:
+      - "16100:16000"
+    command: node main.js
+    networks:
+      - openapi-net
+  
+  filebeat:
+    build:
+      context: ./filebeat
+    container_name: filebeat-openapi
+    volumes:
+      - openapi-log-1:/var/log/openapi1
+      - openapi-log-2:/var/log/openapi2
+      - nginx-log:/var/log/nginx
+    networks:
+      - openapi-net
+    depends_on:
+      - nginx
+
+networks:
+  openapi-net:
+    driver: bridge
+
+volumes:
+  openapi-log-1:
+  openapi-log-2:
+  nginx-log:
+

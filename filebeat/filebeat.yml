@@ -1,0 +1,8 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - "/var/log/openapi*/*.log"
+
+output.logstash:
+  hosts: ["10.252.2.174:5044"]

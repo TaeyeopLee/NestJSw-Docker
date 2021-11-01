@@ -1,0 +1,15 @@
+config:
+  target: http://localhost:80
+  tls:
+  rejectUnauthorized: false
+  phases:
+    - duration: 10
+      arrivalRate: 100
+scenarios:
+  - name: 'localhost'
+    flow:
+      - get:
+          url: "/"
+          # capture:
+          #   json: "$.hashKey"
+          #   as: "hashKey"
