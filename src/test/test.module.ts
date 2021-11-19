@@ -7,5 +7,6 @@ import { TestService } from "./test.service";
     imports: [],
     controllers: [TestController],
     providers: [TestService],
+    exports: [TestService],
   })
 export class TestModule {}

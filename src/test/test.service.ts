@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class TestService {
   getHello(): string {
-    return JSON.stringify({ success: true, data: 'Hello world' });
+    return JSON.stringify({ success: true, data: 'Hello world from TestService' });
   }
+  
   getDelete(): string {
     return 'Deleted !';
   }

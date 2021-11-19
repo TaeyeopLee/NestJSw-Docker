@@ -11,7 +11,6 @@ async function bootstrap() {
     logger: false,
   });
   app.useLogger(app.get(LogShippingService));
-  // app.use(morgan("combined", { stream: logger.stream }));
   await app.listen(16000);
   console.log(`Application is running at ${await app.getUrl()}`);
 }

@@ -8,9 +8,9 @@ import { TestModule } from './test/test.module';
 import { TestService } from './test/test.service';
 
 @Module({
-  imports: [LoggerModule],
+  imports: [LoggerModule, TestModule],
   controllers: [AppController],
-  providers: [AppService, LogShippingService, TestService],
+  providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure (consumer: MiddlewareConsumer) {
