@@ -1,18 +1,33 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Query } from '@nestjs/common';
 import { TestService } from './test.service';
 
 
-@Controller()
+@Controller('test')
 export class TestController {
-  constructor(private readonly appService: TestService) {}
+  constructor(private readonly testService: TestService) {}
 
   @Get('delete')
   getDelete(): string {
-    return this.appService.getDelete();
+    return this.testService.getDelete();
   }
   
   @Get()
   getHello(): string {
-    return this.appService.getHello();
+    return this.testService.getHello();
+  }
+
+  @Get('date')
+  getTestYYYYMMDD(@Query('date') date): string {
+    return this.testService.testDateYYYYMMDD(date);
+  }
+
+  @Get('longdate')
+  getTestYYYYMMDDHHMMSS(@Query('date') date): string {
+    return this.testService.testDateLong(date);
+  }
+
+  @Get('longdateOracle')
+  getTestYYYYMMDDHHMMSSOracle(@Query('date') date): string {
+    return this.testService.testDateLongOracle(date);
   }
 }
